@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Foul-Mouthed Oracle</title>
+<meta name="description" content="The real sky, read through a 1647 astrology book, with a potty mouth.">
+<meta name="theme-color" content="#0b111c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Foul Oracle">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+  html, body { margin: 0; background: #0b111c; color: #f7f1ea; font: 17px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 34rem; margin: 0 auto; padding: max(2rem, env(safe-area-inset-top)) 1.2rem 3rem; text-align: center; }
+  img.logo { width: 132px; height: 132px; border-radius: 28px; }
+  h1 { color: #ffcd9c; font-size: 1.7rem; margin: 0.8rem 0 0.2rem; }
+  .sub { color: #c4ccdb; margin: 0 0 1.4rem; }
+  .punch { font-weight: 700; font-size: 1.15rem; text-align: left; border-left: 5px solid #f0467a;
+           background: #111927; border-radius: 0.6rem; padding: 0.8rem 1rem; margin: 0 0 1.4rem; }
+  a.go { display: block; background: #b5461a; color: #fff; text-decoration: none; font-weight: 700;
+         font-size: 1.15rem; padding: 0.95rem; border-radius: 0.7rem; }
+  .wait { color: #c4ccdb; font-size: 0.92rem; margin-top: 0.6rem; }
+  details { text-align: left; background: #111927; border: 1px solid #4f6789; border-radius: 0.6rem;
+            padding: 0.7rem 1rem; margin-top: 1.1rem; }
+  summary { font-weight: 700; cursor: pointer; }
+  .small { color: #c4ccdb; font-size: 0.85rem; margin-top: 1.6rem; }
+  a { color: #6fd0dc; }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="icons/icon-512.png" alt="">
+  <h1>The Foul-Mouthed Oracle</h1>
+  <p class="sub">The real sky, read through a 1647 astrology book. No sugar-coating.</p>
+  <div class="punch" id="punch">Opening the Oracle. Hold your horses ...</div>
+  <a class="go" id="go" href="https://foul-mouthed-oracle.streamlit.app/">Open the Foul-Mouthed Oracle</a>
+  <p class="wait">If it has been asleep it shows "This app has gone to sleep": tap the button there and wait about a minute.</p>
+  <details id="howto">
+    <summary>Put it on your home screen</summary>
+    <p><b>iPhone or iPad (Safari):</b> tap the Share button (square with an arrow), then <b>Add to Home Screen</b>, then <b>Add</b>.</p>
+    <p><b>Android (Chrome, Samsung Internet, Edge):</b> tap the three dots, then <b>Add to home screen</b> or <b>Install app</b>.</p>
+    <p>Then open it from the crimson icon <b>Foul Oracle</b>: it goes straight to the app.</p>
+  </details>
+  <p class="small">Free, no ads, no account. Swears a lot: choose <b>How rude?</b> in the app's sidebar (Full, Some, Clean or Polite).
+  Astrology has not been found to predict events in controlled studies; this is for fun and reflection.
+  Background image of the app: NASA, ESA, STScI (CC BY 4.0).</p>
+</main>
+<script>
+  // The address of the app. If Streamlit gave it another address, change it here (one line).
+  var APP_URL = "https://foul-mouthed-oracle.streamlit.app/";
+  document.getElementById("go").href = APP_URL;
+  var lines = ["Opening the Oracle. Hold your horses ...", "Waking up Saturn. He is grumpy ...",
+               "Asking the Moon what the heck she is doing ...", "Untangling the darn constellations ..."];
+  document.getElementById("punch").textContent = lines[Math.floor(Math.random() * lines.length)];
+  // Opened from the home-screen icon: go straight to the app, once per launch (so "back" does not loop).
+  var standalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || window.navigator.standalone === true;
+  if (standalone) {
+    document.getElementById("howto").style.display = "none";
+    if (!sessionStorage.getItem("foul-opened")) {
+      sessionStorage.setItem("foul-opened", "1");
+      setTimeout(function () { window.location.href = APP_URL; }, 600);
+    }
+  }
+  if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(function () {}); }
+</script>
+</body>
+</html>
